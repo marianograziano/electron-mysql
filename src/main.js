@@ -37,6 +37,30 @@ ipcMain.on('create-product', async (event, arg) => {
   }
 });
 
+async function getProducts() {
+  const conn = await getConnection();
+  const result = await conn.query('SELECT * FROM product');
+  return result;
+}
+
+ipcMain.on('get-products', async (event, arg) => {
+  try {
+    const result = await getProducts();
+    event.reply('products', result);
+  }
+  catch (error) {
+    console.error("IPC Error: ", error);
+    event.reply('products-failed', { message: 'Failed to get products.' });
+  }
+  
+  
+  const result = await getProducts();
+  event.reply('products', result);
+});
+
+
+
+
 let window = null  
 function createWindow () {
   window  = new BrowserWindow({

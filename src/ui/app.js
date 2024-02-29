@@ -17,3 +17,15 @@ productForm.addEventListener('submit', (e) => {
         
       });
 });
+
+ipcRenderer.on('product-save-failed', (event, message) => {
+    console.error("IPC Error: ", message);
+}, false);
+
+
+
+ipcRenderer.send('get-products', {});   
+
+ipcRenderer.on('products', (event, products) => {
+    console.log("Se recibio del back los productos: ", products);
+}   );
