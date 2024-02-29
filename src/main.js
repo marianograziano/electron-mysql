@@ -1,4 +1,4 @@
-const {BrowserWindow,ipcMain, Notification} =  require('electron')
+const {BrowserWindow,ipcMain, Notification, Menu } =  require('electron')
 const { getConnection } = require('./database');
 
 async function createProduct(product) {
@@ -55,7 +55,8 @@ ipcMain.on('get-products', async (event, arg) => {
   
   
   const result = await getProducts();
-  event.reply('products', result);
+  //console.log("Se envio al front los productos : ", result);
+  event.reply('products', result); 
 });
 
 
@@ -63,6 +64,35 @@ ipcMain.on('get-products', async (event, arg) => {
 
 let window = null  
 function createWindow () {
+  const menuTemplate = [
+    {
+      label: 'Menu Principal',
+      submenu: [
+        {
+          label: 'Página Principal',
+          click() {
+            window.loadFile('src/ui/index.html');
+          },
+        },
+        {
+          label: 'Página 1',
+          click() {
+            window.loadFile('src/ui/precios.html');
+          },
+        },
+        {
+          label: 'Página 2',
+          click() {
+            window.loadFile('src/ui/pagina2.html');
+          },
+        },
+      ],
+    },
+    // Puedes agregar más elementos al menú principal aquí
+  ];
+  
+  const menu = Menu.buildFromTemplate(menuTemplate);
+  
   window  = new BrowserWindow({
     width: 800,
     height: 600,
@@ -74,9 +104,25 @@ function createWindow () {
       enableRemoteModule: true
     },
   })
-
+  Menu.setApplicationMenu(menu);
   window.loadFile('src/ui/index.html')
-}
+      // Escuchar el evento de maximizar
+      window.on('maximize', () => {
+        // Poner la ventana en pantalla completa
+        
+    });
+  
+    // Opcional: Escuchar el evento de salida de pantalla completa
+    // Para manejar el caso de usar ESC para salir de pantalla completa
+    window.on('leave-full-screen', () => {
+        window.unmaximize();
+    });
+
+  }
+
+
+
+
 
 
 module.exports = {createWindow}
