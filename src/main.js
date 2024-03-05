@@ -75,17 +75,13 @@ function createWindow () {
           },
         },
         {
-          label: 'Página 1',
+          label: 'Precios',
           click() {
             window.loadFile('src/ui/precios.html');
           },
         },
-        {
-          label: 'Página 2',
-          click() {
-            window.loadFile('src/ui/pagina2.html');
-          },
-        },
+        { role: 'toggleDevTools' }
+
       ],
     },
     // Puedes agregar más elementos al menú principal aquí

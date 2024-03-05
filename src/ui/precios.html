@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Precios</title>
+    <title>Parse XLSX con Electron</title>
 </head>
 <body>
-    
+    <input type="file" id="input-file" accept=".xlsx, .xls" />
+    <button id="submit-btn">Cargar Archivo</button>
+    <button id="reset-btn">Limpiar y cargar nuevo archivo</button>
+    <table id="data-output">
+        <!-- Los datos del rango A14:K41 se mostrarán aquí -->
+    </table>
+    <script src="./xlsxproccesor.js"></script>
 </body>
 </html>
